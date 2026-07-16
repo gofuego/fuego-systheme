@@ -175,6 +175,16 @@ footer {
 main:has(.repo-home) { max-width: 1080px; }
 .repo-home .lede { margin-bottom: 2rem; }
 
+/* Keep the header clear of the fixed decision card: when the rail exists,
+   title, lede, and the .gitignore stay within the main column's width. */
+@media (min-width: 1081px) {
+  .repo-home:has(.decision-rail) > .page-title,
+  .repo-home:has(.decision-rail) > .lede,
+  .repo-home:has(.decision-rail) > .gitignore {
+    max-width: calc(100% - 300px - 1.75rem);
+  }
+}
+
 .home-cols { display: flex; gap: 1.75rem; align-items: flex-start; }
 .home-main { flex: 1; min-width: 0; }
 
