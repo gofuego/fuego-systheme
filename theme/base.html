@@ -8,7 +8,30 @@
   {{if or (eq .Page.Type "mermaid") (eq .Page.Type "dbml")}}
   <script type="module">
     import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
-    mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+    // Denser flowcharts: mermaid's default node/rank spacing dwarfs short
+    // labels, so wide diagrams fit-to-width with tiny text. A larger base
+    // font against tighter fixed spacing keeps boxes legible after scaling.
+    mermaid.initialize({
+      startOnLoad: false,
+      theme: "neutral",
+      themeVariables: { fontSize: "18px" },
+      flowchart: { nodeSpacing: 35, rankSpacing: 40, padding: 12 },
+    });
+    await mermaid.run();
+    // Mermaid caps an SVG at its natural size (max-width), so compact
+    // landscape diagrams render tiny in a wide canvas. Let wide diagrams
+    // scale up to the canvas (capped so text never turns comic-sized);
+    // portrait diagrams keep their natural size.
+    for (const svg of document.querySelectorAll(".mermaid svg")) {
+      const vb = svg.viewBox.baseVal;
+      if (!vb || !vb.width || !vb.height) continue;
+      const canvas = svg.closest(".diagram-canvas") || svg.parentElement;
+      const avail = canvas.clientWidth - 48;
+      if (vb.width / vb.height >= 1.2 && vb.width < avail) {
+        svg.style.maxWidth = "none";
+        svg.style.width = Math.min(avail, vb.width * 1.8) + "px";
+      }
+    }
   </script>
   {{end}}
 </head>
@@ -30,5 +53,12 @@
       <a href="https://github.com/gofuego/fuego-systheme">fuego-systheme</a> —
       nothing was written back.</p>
   </footer>
+  <script>
+    // Expand the file tree along the path to the current file (dirs are
+    // collapsed by default).
+    for (let el = document.querySelector(".filetree .is-current"); el; el = el.parentElement) {
+      if (el.tagName === "DETAILS") el.open = true;
+    }
+  </script>
 </body>
 </html>

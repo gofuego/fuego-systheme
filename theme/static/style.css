@@ -63,41 +63,67 @@ a:hover { text-decoration: underline; }
 }
 main { flex: 1; min-width: 0; max-width: 920px; padding: 2.5rem 2rem; }
 
-/* ---- repo file tree ---- */
+/* ---- repo file tree (JetBrains-flavored) ---- */
 
 .filetree {
-  width: 250px;
+  width: 264px;
   flex: none;
   border-right: 1px solid var(--border);
-  padding: 1.5rem 1rem 2rem 1.5rem;
-  font-family: var(--mono);
-  font-size: 0.8rem;
-  line-height: 1.9;
+  padding: 1.25rem 0.6rem 2rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
   overflow-y: auto;
+  user-select: none;
 }
 .filetree nav { position: sticky; top: 1rem; }
-.tree-rootlink { display: block; color: var(--muted); font-weight: 700; }
-.tree-dir > summary {
-  color: var(--muted);
-  cursor: pointer;
-  list-style: none;
-  white-space: nowrap;
-}
-.tree-dir > summary::before { content: "▸ "; font-size: 0.7em; color: var(--border); }
-.tree-dir[open] > summary::before { content: "▾ "; }
-.tree-children { padding-left: 0.95rem; border-left: 1px solid var(--border); margin-left: 0.25rem; }
-.tree-file {
-  display: block;
-  color: var(--text);
+
+.tree-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.18rem 0.55rem;
+  border-radius: 6px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.tree-file:hover { color: var(--accent); text-decoration: none; }
-.tree-file.is-current, .tree-rootlink.is-current {
-  color: var(--accent);
-  font-weight: 700;
+.tree-row:hover { background: #eceef1; }
+
+.tree-dir > summary { list-style: none; cursor: pointer; color: var(--text); font-weight: 500; }
+.tree-dir > summary::-webkit-details-marker { display: none; }
+.tree-dir > summary .tree-row::before {
+  content: "";
+  flex: none;
+  width: 0;
+  height: 0;
+  border-left: 5px solid var(--muted);
+  border-top: 4px solid transparent;
+  border-bottom: 4px solid transparent;
+  transition: transform 0.12s ease;
 }
+.tree-dir[open] > summary .tree-row::before { transform: rotate(90deg); }
+
+.tree-children { margin-left: 0.85rem; border-left: 1px solid var(--border); padding-left: 0.35rem; }
+
+.tree-file { display: block; color: var(--text); }
+.tree-file:hover { text-decoration: none; }
+.tree-file .tree-row::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--border);
+}
+.ft-openapi    .tree-row::before { background: var(--c-api); }
+.ft-dbml       .tree-row::before { background: var(--c-data); }
+.ft-playwright .tree-row::before { background: var(--c-tests); }
+.ft-k8s        .tree-row::before { background: var(--c-infra); }
+.ft-docker     .tree-row::before { background: var(--c-containers); }
+.ft-adr        .tree-row::before { background: var(--c-decisions); }
+.ft-mermaid    .tree-row::before { background: var(--c-diagrams); }
+.ft-md         .tree-row::before { background: var(--c-docs); }
+.tree-file.is-current .tree-row { background: #e3edff; color: var(--accent); font-weight: 600; }
 @media (max-width: 900px) {
   .shell { flex-direction: column; }
   .filetree { width: auto; border-right: none; border-bottom: 1px solid var(--border); }
@@ -244,7 +270,6 @@ footer {
 .y-line.is-deprecated .y-method, .y-line.is-deprecated .y-comment { text-decoration: line-through; }
 
 .erd-canvas { margin-bottom: 1.5rem; }
-.erd-canvas svg { width: 100%; height: auto; min-width: 640px; }
 
 /* ---- rows: the structural unit of artifact pages ---- */
 
@@ -400,7 +425,7 @@ footer {
   justify-content: center;
   overflow-x: auto;
 }
-.diagram-canvas .mermaid { display: flex; justify-content: center; }
+.diagram-canvas .mermaid { display: flex; justify-content: center; width: 100%; }
 
 /* ---- taxonomy ---- */
 

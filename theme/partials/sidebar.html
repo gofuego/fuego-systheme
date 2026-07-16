@@ -1,12 +1,11 @@
 <aside class="filetree">
   <nav aria-label="Repository files">
-    <a class="tree-rootlink{{if eq .Page.URL "/"}} is-current{{end}}" href="{{.Site.BaseURL}}/">./</a>
     {{range .Page.Envelope.nav}}{{template "navnode" (dict "n" . "cur" $.Page.URL "base" $.Site.BaseURL)}}{{end}}
   </nav>
 </aside>
-{{define "navnode"}}{{if .n.children}}<details open class="tree-dir">
-  <summary>{{.n.name}}/</summary>
+{{define "navnode"}}{{if .n.children}}<details class="tree-dir">
+  <summary><span class="tree-row">{{.n.name}}</span></summary>
   <div class="tree-children">
     {{range .n.children}}{{template "navnode" (dict "n" . "cur" $.cur "base" $.base)}}{{end}}
   </div>
-</details>{{else}}<a class="tree-file{{if eq .n.url .cur}} is-current{{end}}" href="{{.base}}{{.n.url}}">{{.n.name}}</a>{{end}}{{end}}
+</details>{{else}}<a class="tree-file ft-{{.n.type}}{{if eq .n.url .cur}} is-current{{end}}" href="{{.base}}{{.n.url}}"><span class="tree-row">{{.n.name}}</span></a>{{end}}{{end}}
