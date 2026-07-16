@@ -37,8 +37,26 @@ body {
 
 code, .mono { font-family: var(--mono); font-size: 0.875em; }
 
-a { color: var(--accent); text-decoration: none; }
-a:hover { text-decoration: underline; }
+/* Links wear the ink color with a soft permanent underline; hover shifts to
+   the accent — no bare-blue, no popping underlines. Navigational surfaces
+   (topbar, tree, cards, code views) opt out of the underline below. */
+a {
+  color: inherit;
+  font-weight: 500;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: #b9c2cf;
+  text-underline-offset: 3px;
+  transition: color 0.1s ease, text-decoration-color 0.1s ease;
+}
+a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.topbar a, .tree-file, .entry-list a, .rail-title, .rail-foot a, .yaml-doc a,
+.term, .ref-list a, .decision-list a, .row a, footer a {
+  text-decoration: none;
+}
+.yaml-doc .y-link { color: var(--accent); font-weight: 400; }
+.row a, .entry-list a, .decision-list a { color: var(--text); }
+.row a:hover, .entry-list a:hover, .decision-list a:hover { color: var(--accent); }
 
 /* ---- chrome ---- */
 
@@ -161,44 +179,88 @@ main:has(.repo-home) { max-width: 1080px; }
 .home-main { flex: 1; min-width: 0; }
 
 .decision-rail { width: 300px; flex: none; }
+/* Fixed to the viewport (the rail div reserves the column; with no
+   left/right offset a fixed box keeps its static x-position), so the card
+   follows the scroll — and scrolls internally if it outgrows the screen. */
 .decision-card {
-  position: sticky;
-  top: 1.25rem;
-  max-height: calc(100vh - 2.5rem);
+  position: fixed;
+  top: 4.75rem;
+  width: 300px;
+  max-height: calc(100vh - 7.5rem);
   overflow-y: auto;
+  overscroll-behavior: contain;
   background: var(--surface);
   border: 1px solid var(--border);
-  border-top: 3px solid var(--c-decisions);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(20, 30, 50, 0.06);
+  padding: 1rem 1.15rem 0.8rem;
+  scrollbar-width: thin;
 }
-.decision-card h2 {
-  font-size: 0.8rem;
+.decision-card::-webkit-scrollbar { width: 6px; }
+.decision-card::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.rail-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.35rem; }
+.rail-head h2 {
+  font-size: 0.78rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.09em;
   color: var(--muted);
-  margin-bottom: 0.7rem;
+}
+.rail-count {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--c-decisions);
+  background: #fdeff5;
+  border-radius: 999px;
+  padding: 0.05rem 0.55rem;
+}
+.rail-group {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin: 0.75rem 0 0.15rem;
 }
 .rail-list { list-style: none; }
-.rail-list li {
+.rail-decision { padding: 0.45rem 0.1rem; }
+.rail-decision + .rail-decision { border-top: 1px solid #eef0f3; }
+.rail-decision.is-open {
+  border-left: 2px solid var(--orange);
+  padding-left: 0.6rem;
+  border-top: none;
+}
+.rail-top { display: flex; align-items: baseline; gap: 0.45rem; margin-bottom: 0.1rem; }
+.rail-top .adr-num { font-size: 0.72rem; }
+.rail-date, .rail-deadline { font-size: 0.72rem; color: var(--muted); }
+.rail-deadline { color: var(--orange); font-weight: 600; }
+.rail-decision .status { font-size: 0.62rem; padding: 0.02rem 0.4rem; }
+.rail-title {
+  display: block;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+.rail-title:hover { color: var(--accent); }
+.rail-foot {
   display: flex;
   align-items: baseline;
+  justify-content: space-between;
   gap: 0.5rem;
-  padding: 0.4rem 0;
+  margin-top: 0.8rem;
+  padding-top: 0.6rem;
   border-top: 1px solid var(--border);
-  font-size: 0.85rem;
-  line-height: 1.45;
+  font-size: 0.78rem;
+  color: var(--muted);
 }
-.rail-item { flex: 1; min-width: 0; }
-.rail-meta { display: flex; gap: 0.4rem; margin-top: 0.2rem; }
-.rail-list-open li { border-top: none; background: #fffdf4; border-radius: 6px; padding: 0.45rem 0.5rem; margin-bottom: 0.4rem; }
-.decision-card .decision-retired { margin-top: 0.7rem; font-size: 0.8rem; }
+.rail-foot a { color: var(--muted); font-weight: 600; }
+.rail-foot a:hover { color: var(--accent); }
 
 @media (max-width: 1080px) {
   .home-cols { flex-direction: column; }
   .decision-rail { width: 100%; }
-  .decision-card { position: static; max-height: none; }
+  .decision-card { position: static; width: auto; max-height: none; }
 }
 .home-sec { margin-bottom: 2.75rem; }
 .sec-title {

@@ -45,34 +45,41 @@
     {{with .Page.Envelope.decisions}}
     <aside class="decision-rail">
       <section class="decision-card">
-        <h2>Decisions in force</h2>
+        <header class="rail-head">
+          <h2>Decisions in force</h2>
+          <span class="rail-count">{{.count}}</span>
+        </header>
         {{with .open}}
-        <ul class="rail-list rail-list-open">
+        <p class="rail-group">Open</p>
+        <ul class="rail-list">
           {{range .}}
-          <li>
-            <span class="adr-num mono">#{{printf "%03d" .number}}</span>
-            <div class="rail-item">
-              <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
-              <div class="rail-meta">
-                <span class="status status-{{.status}}">{{.status}}</span>
-                {{with .deadline}}<span class="meta-chip meta-deadline">by {{.}}</span>{{end}}
-              </div>
+          <li class="rail-decision is-open">
+            <div class="rail-top">
+              <span class="adr-num mono">#{{printf "%03d" .number}}</span>
+              <span class="status status-{{.status}}">{{.status}}</span>
+              {{with .deadline}}<span class="rail-deadline">by {{.}}</span>{{end}}
             </div>
+            <a class="rail-title" href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
           </li>
           {{end}}
         </ul>
         {{end}}
+        <p class="rail-group">Accepted</p>
         <ul class="rail-list">
           {{range .accepted}}
-          <li>
-            <span class="adr-num mono">#{{printf "%03d" .number}}</span>
-            <div class="rail-item"><a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a></div>
+          <li class="rail-decision">
+            <div class="rail-top">
+              <span class="adr-num mono">#{{printf "%03d" .number}}</span>
+              {{with .date_accepted}}<span class="rail-date">{{.}}</span>{{end}}
+            </div>
+            <a class="rail-title" href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
           </li>
           {{end}}
         </ul>
-        <p class="decision-retired">
-          {{if .retired}}{{.retired}} retired · {{end}}<a href="{{$.Site.BaseURL}}/decisions/">full log</a>
-        </p>
+        <footer class="rail-foot">
+          {{if .retired}}<span>{{.retired}} retired</span>{{end}}
+          <a href="{{$.Site.BaseURL}}/decisions/">Full decision log →</a>
+        </footer>
       </section>
     </aside>
     {{end}}

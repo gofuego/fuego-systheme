@@ -177,6 +177,7 @@ func buildDecisionBoard(pages []*core.Page) map[string]any {
 	return map[string]any{
 		"accepted": adrEntryList(accepted),
 		"open":     adrEntryList(open),
+		"count":    len(accepted) + len(open),
 		"retired":  retired,
 	}
 }
