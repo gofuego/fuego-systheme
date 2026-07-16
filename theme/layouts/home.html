@@ -10,64 +10,72 @@
   </details>
   {{end}}
 
-  {{with .Page.Envelope.readme_html}}
-  <details class="readme-panel" open>
-    <summary>
-      <h2 class="sec-title">README</h2>
-      <span class="panel-toggle" aria-hidden="true"></span>
-    </summary>
-    <article class="prose readme">{{safeHTML .}}</article>
-  </details>
-  {{end}}
+  <div class="home-cols">
+    <div class="home-main">
+      {{with .Page.Envelope.readme_html}}
+      <details class="readme-panel" open>
+        <summary>
+          <h2 class="sec-title">README</h2>
+          <span class="panel-toggle" aria-hidden="true"></span>
+        </summary>
+        <article class="prose readme">{{safeHTML .}}</article>
+      </details>
+      {{end}}
 
-  <section class="home-sec">
-    <h2 class="sec-title">In this repo</h2>
-    <div class="module-grid">
-      {{range .Page.Envelope.modules}}
-      <section class="module">
-        <header>
-          <h3 class="mono">{{.name}}</h3>
-          <span class="module-chips">{{range .chips}}<span class="meta-chip">{{.count}} {{.unit}}</span>{{end}}</span>
-        </header>
-        <ul class="entry-list">
-          {{range .entries}}
-          <li><a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a><span class="type-chip type-{{.type}}">{{.type}}</span></li>
+      <section class="home-sec">
+        <h2 class="sec-title">In this repo</h2>
+        <div class="module-grid">
+          {{range .Page.Envelope.modules}}
+          <section class="module">
+            <header>
+              <h3 class="mono">{{.name}}</h3>
+              <span class="module-chips">{{range .chips}}<span class="meta-chip">{{.count}} {{.unit}}</span>{{end}}</span>
+            </header>
+            <ul class="entry-list">
+              {{range .entries}}
+              <li><a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a><span class="type-chip type-{{.type}}">{{.type}}</span></li>
+              {{end}}
+            </ul>
+          </section>
+          {{end}}
+        </div>
+      </section>
+    </div>
+
+    {{with .Page.Envelope.decisions}}
+    <aside class="decision-rail">
+      <section class="decision-card">
+        <h2>Decisions in force</h2>
+        {{with .open}}
+        <ul class="rail-list rail-list-open">
+          {{range .}}
+          <li>
+            <span class="adr-num mono">#{{printf "%03d" .number}}</span>
+            <div class="rail-item">
+              <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
+              <div class="rail-meta">
+                <span class="status status-{{.status}}">{{.status}}</span>
+                {{with .deadline}}<span class="meta-chip meta-deadline">by {{.}}</span>{{end}}
+              </div>
+            </div>
+          </li>
           {{end}}
         </ul>
+        {{end}}
+        <ul class="rail-list">
+          {{range .accepted}}
+          <li>
+            <span class="adr-num mono">#{{printf "%03d" .number}}</span>
+            <div class="rail-item"><a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a></div>
+          </li>
+          {{end}}
+        </ul>
+        <p class="decision-retired">
+          {{if .retired}}{{.retired}} retired · {{end}}<a href="{{$.Site.BaseURL}}/decisions/">full log</a>
+        </p>
       </section>
-      {{end}}
-    </div>
-  </section>
-
-  {{with .Page.Envelope.decisions}}
-  <section class="home-sec">
-    <h2 class="sec-title">Decisions in force</h2>
-    {{with .open}}
-    <ul class="decision-list decision-list-open">
-      {{range .}}
-      <li>
-        <span class="adr-num mono">#{{printf "%03d" .number}}</span>
-        <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
-        <span class="status status-{{.status}}">{{.status}}</span>
-        {{with .deadline}}<span class="meta-chip meta-deadline">decide by {{.}}</span>{{end}}
-      </li>
-      {{end}}
-    </ul>
+    </aside>
     {{end}}
-    <ul class="decision-list">
-      {{range .accepted}}
-      <li>
-        <span class="adr-num mono">#{{printf "%03d" .number}}</span>
-        <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
-        {{with .date_accepted}}<span class="decision-date">{{.}}</span>{{end}}
-        {{range .tags}}<span class="meta-chip">{{.}}</span>{{end}}
-      </li>
-      {{end}}
-    </ul>
-    <p class="decision-retired">
-      {{if .retired}}{{.retired}} superseded or deprecated decision{{if ne .retired 1}}s{{end}} not shown — {{end}}<a href="{{$.Site.BaseURL}}/decisions/">full decision log</a>
-    </p>
-  </section>
-  {{end}}
+  </div>
 </div>
 {{end}}
