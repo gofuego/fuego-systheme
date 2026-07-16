@@ -1,0 +1,23 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Process</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  <p class="lede">Every decision this repository records, by lifecycle state.</p>
+  {{range .Page.Envelope.groups}}
+  <section class="decision-group">
+    <h2 class="sec-title"><span class="status status-{{.status}}">{{.status}}</span></h2>
+    <ul class="decision-list">
+      {{range .entries}}
+      <li>
+        <span class="adr-num mono">#{{printf "%03d" .number}}</span>
+        <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
+        {{with .date_accepted}}<span class="decision-date">{{.}}</span>{{end}}
+        {{with .deadline}}<span class="meta-chip meta-deadline">decide by {{.}}</span>{{end}}
+        {{range .tags}}<span class="meta-chip">{{.}}</span>{{end}}
+      </li>
+      {{end}}
+    </ul>
+  </section>
+  {{end}}
+</article>
+{{end}}

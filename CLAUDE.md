@@ -40,9 +40,24 @@ fuego-systheme/
   kubernetes → `k8s`, adr → `adr`); lifts k8s identity out of the
   `k8s-resource-header` node into the envelope (`resource_kind` feeds the
   by-kind taxonomy, `title` names the page); extracts `adr_number`.
-- **BuildOverview** (Index): appends the `/` dashboard as a virtual page —
-  per-family cards with counts and entries, computed from page types and
-  envelopes. Runs after ROUTE, so entries carry real URLs.
+- **BuildOverview** (Index): appends the landing page at `/` (root modules
+  with unit counts, the current-decision board — accepted + open only) and
+  the `/decisions/` log (every status, lifecycle order). Runs after ROUTE,
+  so entries carry real URLs.
+- **AggregateArtifacts** (BeforeRender): folds tree-wide data back onto tree
+  roots — the OpenAPI root gains the yaml-document envelope (`paths` grouped
+  by path, `api_tags`, `schemas`, `servers`, `description`); the DBML root
+  gains `erd`, generated mermaid erDiagram source (columns, PK/FK, refs
+  deduped across endpoint pages).
+- **ComposeHome** (BeforeRender, after RewriteContentLinks): lifts the
+  rendered README (links already rewritten; README sits one level deep, so
+  its page-relative hrefs resolve identically from `/`) and the `.gitignore`
+  text onto the landing envelope, then skips the gitignore page. The
+  `.gitignore` is read by a one-node parser in `gitignore.go` — landing-page
+  furniture, the deliberate exception to "no parser code here".
+- **BuildNavTree** (BeforeRender, last): builds the repo file tree once
+  (dirs nested, one leaf per artifact file) and shares it on every page's
+  envelope for the sidebar partial, which renders it recursively.
 - **ResolveRefLinks** (BeforeRender): renderer templates see only the node,
   never `.Site` — this hook converts every cross-page pointer into a
   page-relative `href` attribute (tree-ref `slug`s by climbing

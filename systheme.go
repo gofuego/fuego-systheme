@@ -48,13 +48,20 @@ func Pack() core.Pack {
 			docker.Parser(),
 			kubernetes.Parser(),
 			adr.Parser(),
+			gitignoreParser(),
 		},
 		Theme:          theme,
 		ConfigDefaults: configDefaults,
 		Hooks: core.Hooks{
-			AfterParse:   []core.AfterParseHook{EnrichPages},
-			Index:        []core.IndexHook{BuildOverview},
-			BeforeRender: []core.BeforeRenderHook{ResolveRefLinks, RewriteContentLinks},
+			AfterParse: []core.AfterParseHook{EnrichPages},
+			Index:      []core.IndexHook{BuildOverview},
+			// Order matters: link resolution first (AggregateArtifacts and
+			// ComposeHome consume resolved hrefs / rewritten content), the
+			// nav tree last (it spans every page, including skips decided
+			// by ComposeHome).
+			BeforeRender: []core.BeforeRenderHook{
+				ResolveRefLinks, RewriteContentLinks, AggregateArtifacts, ComposeHome, BuildNavTree,
+			},
 		},
 	}
 }

@@ -53,7 +53,55 @@ a:hover { text-decoration: underline; }
 .topbar a { color: var(--muted); font-size: 0.9rem; }
 .topbar a:hover { color: var(--text); text-decoration: none; }
 
-main { flex: 1; width: 100%; max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem; }
+.shell {
+  flex: 1;
+  display: flex;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  align-items: stretch;
+}
+main { flex: 1; min-width: 0; max-width: 920px; padding: 2.5rem 2rem; }
+
+/* ---- repo file tree ---- */
+
+.filetree {
+  width: 250px;
+  flex: none;
+  border-right: 1px solid var(--border);
+  padding: 1.5rem 1rem 2rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  line-height: 1.9;
+  overflow-y: auto;
+}
+.filetree nav { position: sticky; top: 1rem; }
+.tree-rootlink { display: block; color: var(--muted); font-weight: 700; }
+.tree-dir > summary {
+  color: var(--muted);
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+.tree-dir > summary::before { content: "▸ "; font-size: 0.7em; color: var(--border); }
+.tree-dir[open] > summary::before { content: "▾ "; }
+.tree-children { padding-left: 0.95rem; border-left: 1px solid var(--border); margin-left: 0.25rem; }
+.tree-file {
+  display: block;
+  color: var(--text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.tree-file:hover { color: var(--accent); text-decoration: none; }
+.tree-file.is-current, .tree-rootlink.is-current {
+  color: var(--accent);
+  font-weight: 700;
+}
+@media (max-width: 900px) {
+  .shell { flex-direction: column; }
+  .filetree { width: auto; border-right: none; border-bottom: 1px solid var(--border); }
+}
 
 footer {
   border-top: 1px solid var(--border);
@@ -78,33 +126,35 @@ footer {
 .lede { color: var(--muted); margin-bottom: 1.5rem; max-width: 46rem; }
 .pre-line { white-space: pre-line; }
 
-/* ---- dashboard ---- */
+/* ---- landing page ---- */
 
-.dashboard .lede { margin-bottom: 2rem; }
-.family-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 1.25rem;
+.repo-home .lede { margin-bottom: 2rem; }
+.home-sec { margin-bottom: 2.75rem; }
+.sec-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.9rem;
 }
-.family {
+
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+.module {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 10px;
-  padding: 1.1rem 1.25rem;
-  border-top: 3px solid var(--muted);
+  padding: 0.9rem 1.1rem;
 }
-.family-API        { border-top-color: var(--c-api); }
-.family-Data       { border-top-color: var(--c-data); }
-.family-Tests      { border-top-color: var(--c-tests); }
-.family-Infrastructure { border-top-color: var(--c-infra); }
-.family-Containers { border-top-color: var(--c-containers); }
-.family-Decisions  { border-top-color: var(--c-decisions); }
-.family-Diagrams   { border-top-color: var(--c-diagrams); }
-.family-Docs       { border-top-color: var(--c-docs); }
-
-.family header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.6rem; }
-.family h2 { font-size: 1.05rem; }
-.family-count { font-size: 0.8rem; color: var(--muted); }
+.module header { display: flex; align-items: baseline; justify-content: space-between; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.4rem; }
+.module h3 { font-size: 0.95rem; }
+.module-chips { display: flex; gap: 0.3rem; flex-wrap: wrap; }
 .entry-list { list-style: none; }
 .entry-list li {
   display: flex;
@@ -115,6 +165,86 @@ footer {
   font-size: 0.9rem;
 }
 .entry-list li a { flex: 1; min-width: 0; }
+
+.type-chip {
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.type-openapi    { color: var(--c-api); }
+.type-dbml       { color: var(--c-data); }
+.type-playwright { color: var(--c-tests); }
+.type-k8s        { color: var(--c-infra); }
+.type-docker     { color: var(--c-containers); }
+.type-adr        { color: var(--c-decisions); }
+.type-mermaid    { color: var(--c-diagrams); }
+
+.gitignore { margin-top: 1rem; font-size: 0.85rem; }
+.gitignore summary { color: var(--muted); cursor: pointer; }
+.gitignore pre {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.5rem;
+  color: var(--muted);
+}
+
+.decision-list { list-style: none; }
+.decision-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 0.4rem 0.25rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+.decision-list-open { margin-bottom: 0.75rem; }
+.decision-list-open li { background: #fffdf4; }
+.adr-num { color: var(--muted); font-size: 0.8rem; }
+.decision-date { color: var(--muted); font-size: 0.8rem; }
+.decision-retired { margin-top: 0.6rem; font-size: 0.85rem; color: var(--muted); }
+.decision-group { margin-bottom: 1.75rem; }
+.decision-group .sec-title { border-bottom: none; padding-bottom: 0; }
+
+.readme {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.5rem 1.75rem;
+}
+
+/* ---- yaml-shaped API index ---- */
+
+.yaml-doc {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 1.1rem 1.4rem;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  line-height: 1.75;
+  overflow-x: auto;
+}
+.y-line { white-space: nowrap; }
+.y-i1 { padding-left: 1.6rem; }
+.y-i2 { padding-left: 3.2rem; }
+.y-key { color: var(--c-decisions); }
+.y-str { color: var(--text); }
+.y-path { color: var(--c-api); font-weight: 600; }
+.y-comment { color: var(--muted); }
+.y-link { color: var(--accent); }
+.y-method { font-weight: 700; text-transform: lowercase; }
+.y-method-GET    { color: var(--green); }
+.y-method-POST   { color: var(--accent); }
+.y-method-PUT    { color: var(--orange); }
+.y-method-PATCH  { color: var(--c-diagrams); }
+.y-method-DELETE { color: var(--red); }
+.y-line.is-deprecated .y-method, .y-line.is-deprecated .y-comment { text-decoration: line-through; }
+
+.erd-canvas { margin-bottom: 1.5rem; }
+.erd-canvas svg { width: 100%; height: auto; min-width: 640px; }
 
 /* ---- rows: the structural unit of artifact pages ---- */
 

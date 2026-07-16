@@ -2,7 +2,44 @@
 <article>
   <p class="kicker">API</p>
   <h1 class="page-title">{{.Page.Envelope.title}}</h1>
-  {{with .Page.Envelope.version}}<div class="adr-meta"><span class="meta-chip mono">v{{.}}</span></div>{{end}}
-  {{.Page.Content}}
+  {{with .Page.Envelope.description}}<p class="lede pre-line">{{.}}</p>{{end}}
+
+  <div class="yaml-doc">
+    <div class="y-line"><span class="y-key">info</span>:</div>
+    <div class="y-line y-i1"><span class="y-key">title</span>: <span class="y-str">{{.Page.Envelope.title}}</span></div>
+    {{with .Page.Envelope.version}}<div class="y-line y-i1"><span class="y-key">version</span>: <span class="y-str">{{.}}</span></div>{{end}}
+
+    {{with .Page.Envelope.servers}}
+    <div class="y-line"><span class="y-key">servers</span>:</div>
+    {{range .}}
+    <div class="y-line y-i1">- <span class="y-key">url</span>: <span class="y-str">{{.url}}</span>{{with .description}} <span class="y-comment"># {{.}}</span>{{end}}</div>
+    {{end}}
+    {{end}}
+
+    {{with .Page.Envelope.api_tags}}
+    <div class="y-line"><span class="y-key">tags</span>:</div>
+    {{range .}}
+    <div class="y-line y-i1">- <a class="y-link" href="{{.href}}">{{.name}}</a> <span class="y-comment"># {{.count}} operation{{if ne .count 1}}s{{end}}{{with .description}} — {{.}}{{end}}</span></div>
+    {{end}}
+    {{end}}
+
+    {{with .Page.Envelope.paths}}
+    <div class="y-line"><span class="y-key">paths</span>:</div>
+    {{range .}}
+    <div class="y-line y-i1"><span class="y-path">{{.path}}</span>:</div>
+    {{range .ops}}
+    <div class="y-line y-i2{{if .deprecated}} is-deprecated{{end}}"><a class="y-method y-method-{{.method}}" href="{{.href}}">{{.method}}</a>: <span class="y-comment"># {{.summary}}{{if .deprecated}} (deprecated){{end}}</span></div>
+    {{end}}
+    {{end}}
+    {{end}}
+
+    {{with .Page.Envelope.schemas}}
+    <div class="y-line"><span class="y-key">components</span>:</div>
+    <div class="y-line y-i1"><span class="y-key">schemas</span>:</div>
+    {{range .}}
+    <div class="y-line y-i2"><a class="y-link" href="{{.href}}">{{.name}}</a>:</div>
+    {{end}}
+    {{end}}
+  </div>
 </article>
 {{end}}

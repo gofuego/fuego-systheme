@@ -103,7 +103,8 @@ func TestBuildFixture(t *testing.T) {
 	}
 
 	wantPages := []string{
-		"index.html",                          // dashboard
+		"index.html",                          // landing page
+		"decisions/index.html",                // the full decision log
 		"docs/guide/index.html",               // markdown
 		"docs/flow/index.html",                // mermaid
 		"api/petstore.openapi/index.html",     // openapi root
@@ -123,14 +124,47 @@ func TestBuildFixture(t *testing.T) {
 			t.Errorf("expected output page %s: %v", p, err)
 		}
 	}
+	if _, err := os.Stat(filepath.Join(out, "gitignore", "index.html")); err == nil {
+		t.Error(".gitignore rendered as a standalone page; it belongs only in the landing collapsible")
+	}
 
 	home, err := os.ReadFile(filepath.Join(out, "index.html"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	for _, family := range []string{"API", "Data", "Tests", "Infrastructure", "Containers", "Decisions", "Diagrams", "Docs"} {
-		if !strings.Contains(string(home), ">"+family+"<") {
-			t.Errorf("dashboard is missing the %s family card", family)
+	for _, want := range []string{
+		"In this repo",       // module cards
+		">api/<", ">db/<",    // dir modules (with trailing slash)
+		"Decisions in force", // current-decisions board
+		"Use Postgres",       // the accepted decision on the board
+		"README",             // rendered readme section
+		"one-artifact-per-format fixture",
+		".gitignore",         // the collapsible
+		"node_modules/",      // gitignore content inside it
+		"tree-file",          // the sidebar file tree
+	} {
+		if !strings.Contains(string(home), want) {
+			t.Errorf("landing page is missing %q", want)
+		}
+	}
+
+	apiRoot, err := os.ReadFile(filepath.Join(out, "api", "petstore.openapi", "index.html"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{"yaml-doc", ">paths<", "/pets", "y-method-GET", ">schemas<"} {
+		if !strings.Contains(string(apiRoot), want) {
+			t.Errorf("openapi root yaml view is missing %q", want)
+		}
+	}
+
+	dbRoot, err := os.ReadFile(filepath.Join(out, "db", "inventory", "index.html"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, want := range []string{"erDiagram", "items ||--o{ stock", "int id PK", "int item_id FK"} {
+		if !strings.Contains(string(dbRoot), want) {
+			t.Errorf("dbml root ERD is missing %q", want)
 		}
 	}
 }

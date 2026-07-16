@@ -2,9 +2,19 @@
 
 The **system theme** for the [Fuego](https://github.com/gofuego/fuego)
 meta-engine: point it at a repository and it renders the engineering
-artifacts the repo already contains as one navigable site — an overview
-dashboard, a section per artifact, cross-linked and taxonomy-indexed.
-Nothing is written into the repository.
+artifacts the repo already contains as one navigable site that reads like
+the repo itself. Nothing is written into the repository.
+
+- a **repo-structure sidebar** on every page — the file tree, artifacts as
+  links, current file highlighted;
+- a **landing page that orients**: the root modules and what each contains,
+  the decisions currently in force (superseded history one click away at
+  `/decisions/`), the rendered README, and the `.gitignore` in a
+  collapsible;
+- the **OpenAPI index shaped like the yaml** devs already scan — `info`,
+  `servers`, `tags`, `paths` with method-colored links, `components.schemas`;
+- the **DBML schema as an ERD** — a mermaid entity-relationship diagram
+  generated from the tables, keys, and refs, above the linked table pages.
 
 **Demo:** [demo-fuego-systheme](https://github.com/gofuego/demo-fuego-systheme)
 — a fictional AI service rendered at
