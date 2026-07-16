@@ -3,6 +3,23 @@
   <h1 class="page-title">{{.Site.Name}}</h1>
   <p class="lede">The system as its repository describes it — structure, decisions in force, and the README.</p>
 
+  {{with .Page.Envelope.gitignore}}
+  <details class="gitignore">
+    <summary class="mono">.gitignore</summary>
+    <pre>{{.}}</pre>
+  </details>
+  {{end}}
+
+  {{with .Page.Envelope.readme_html}}
+  <details class="readme-panel" open>
+    <summary>
+      <h2 class="sec-title">README</h2>
+      <span class="panel-toggle" aria-hidden="true"></span>
+    </summary>
+    <article class="prose readme">{{safeHTML .}}</article>
+  </details>
+  {{end}}
+
   <section class="home-sec">
     <h2 class="sec-title">In this repo</h2>
     <div class="module-grid">
@@ -20,12 +37,6 @@
       </section>
       {{end}}
     </div>
-    {{with .Page.Envelope.gitignore}}
-    <details class="gitignore">
-      <summary class="mono">.gitignore</summary>
-      <pre>{{.}}</pre>
-    </details>
-    {{end}}
   </section>
 
   {{with .Page.Envelope.decisions}}
@@ -56,13 +67,6 @@
     <p class="decision-retired">
       {{if .retired}}{{.retired}} superseded or deprecated decision{{if ne .retired 1}}s{{end}} not shown — {{end}}<a href="{{$.Site.BaseURL}}/decisions/">full decision log</a>
     </p>
-  </section>
-  {{end}}
-
-  {{with .Page.Envelope.readme_html}}
-  <section class="home-sec">
-    <h2 class="sec-title">README</h2>
-    <article class="prose readme">{{safeHTML .}}</article>
   </section>
   {{end}}
 </div>

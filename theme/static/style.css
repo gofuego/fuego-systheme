@@ -205,8 +205,9 @@ footer {
 .type-adr        { color: var(--c-decisions); }
 .type-mermaid    { color: var(--c-diagrams); }
 
-.gitignore { margin-top: 1rem; font-size: 0.85rem; }
-.gitignore summary { color: var(--muted); cursor: pointer; }
+.gitignore { margin: -1rem 0 1.75rem; font-size: 0.8rem; }
+.gitignore summary { color: var(--muted); cursor: pointer; width: fit-content; }
+.gitignore summary:hover { color: var(--text); }
 .gitignore pre {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -215,6 +216,23 @@ footer {
   margin-top: 0.5rem;
   color: var(--muted);
 }
+
+/* README panel: open by default, the × collapses it to just the title. */
+.readme-panel { margin-bottom: 2.75rem; }
+.readme-panel > summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.readme-panel > summary::-webkit-details-marker { display: none; }
+.readme-panel > summary .sec-title { flex: 1; margin-bottom: 0.9rem; }
+.panel-toggle { color: var(--muted); font-size: 1.05rem; line-height: 1; }
+.panel-toggle::before { content: "+"; }
+.readme-panel[open] .panel-toggle::before { content: "×"; }
+.panel-toggle:hover { color: var(--text); }
 
 .decision-list { list-style: none; }
 .decision-list li {
