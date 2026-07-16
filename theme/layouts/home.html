@@ -1,0 +1,26 @@
+{{define "content"}}
+<div class="dashboard">
+  <h1 class="page-title">{{.Site.Name}}</h1>
+  <p class="lede">Everything this system is made of, rendered from the artifacts in its repository.</p>
+  <div class="family-grid">
+    {{range .Page.Envelope.families}}
+    {{if .count}}
+    <section class="family family-{{.label}}">
+      <header>
+        <h2>{{.label}}</h2>
+        <span class="family-count">{{.count}} {{.unit}}</span>
+      </header>
+      <ul class="entry-list">
+        {{range .entries}}
+        <li>
+          <a href="{{$.Site.BaseURL}}{{.url}}">{{.title}}</a>
+          {{if .meta}}<span class="meta-chip">{{.meta}}</span>{{end}}
+        </li>
+        {{end}}
+      </ul>
+    </section>
+    {{end}}
+    {{end}}
+  </div>
+</div>
+{{end}}

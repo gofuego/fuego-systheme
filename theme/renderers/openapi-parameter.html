@@ -1,0 +1,7 @@
+<div class="row">
+  <code class="row-key">{{index .Attributes "name"}}</code>
+  <span class="meta-chip">{{index .Attributes "in"}}</span>
+  <span class="meta-chip mono">{{index .Attributes "type"}}</span>
+  {{if index .Attributes "required"}}<span class="status status-required">required</span>{{end}}
+  <span class="row-note">{{.Content}}</span>
+</div>

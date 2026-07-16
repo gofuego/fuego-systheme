@@ -1,0 +1,28 @@
+{{define "content"}}
+<article class="adr">
+  <p class="kicker">Decision{{if .Page.Envelope.adr_number}} #{{printf "%03d" .Page.Envelope.adr_number}}{{end}}</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  <div class="adr-meta">
+    <span class="status status-{{.Page.Envelope.status}}">{{.Page.Envelope.status}}</span>
+    {{with .Page.Envelope.date_accepted}}<span class="meta-chip">accepted {{.}}</span>{{end}}
+    {{with .Page.Envelope.date_superseded}}<span class="meta-chip">superseded {{.}}</span>{{end}}
+    {{with .Page.Envelope.deadline}}<span class="meta-chip meta-deadline">decide by {{.}}</span>{{end}}
+    {{with .Page.Envelope.author}}<span class="meta-chip">by {{range $i, $a := .}}{{if $i}}, {{end}}{{$a}}{{end}}</span>{{end}}
+  </div>
+  {{if or .Page.Envelope.supersedes .Page.Envelope.superseded_by}}
+  <div class="adr-supersession">
+    {{with .Page.Envelope.supersedes}}<span>supersedes {{range $i, $n := .}}{{if $i}}, {{end}}ADR-{{printf "%03d" $n}}{{end}}</span>{{end}}
+    {{with .Page.Envelope.superseded_by}}<span>superseded by {{range $i, $n := .}}{{if $i}}, {{end}}ADR-{{printf "%03d" $n}}{{end}}</span>{{end}}
+  </div>
+  {{end}}
+  <div class="prose">
+  {{.Page.Content}}
+  </div>
+  {{if or .Page.Envelope.tags .Page.Envelope.affects}}
+  <footer class="adr-footer">
+    {{with .Page.Envelope.tags}}<p>Tags: {{range .}}<span class="meta-chip">{{.}}</span> {{end}}</p>{{end}}
+    {{with .Page.Envelope.affects}}<p>Affects: {{range .}}<code>{{.}}</code> {{end}}</p>{{end}}
+  </footer>
+  {{end}}
+</article>
+{{end}}

@@ -1,0 +1,6 @@
+<div class="row">
+  <span class="meta-chip">volume</span>
+  <code class="row-key">{{index .Attributes "name"}}</code>
+  <span class="meta-chip mono">{{index .Attributes "volumeType"}}</span>
+  {{with index .Attributes "refName"}}<span class="row-note mono">→ {{.}}</span>{{end}}
+</div>

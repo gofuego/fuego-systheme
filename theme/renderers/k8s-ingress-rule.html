@@ -1,0 +1,7 @@
+<div class="row">
+  <span class="meta-chip">rule</span>
+  <code class="row-key">{{index .Attributes "host"}}{{index .Attributes "path"}}</code>
+  <span class="rel-arrow">→</span>
+  <code>{{index .Attributes "serviceName"}}:{{index .Attributes "servicePort"}}</code>
+  <span class="meta-chip mono">{{index .Attributes "pathType"}}</span>
+</div>

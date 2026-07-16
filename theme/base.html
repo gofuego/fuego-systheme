@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{if .Page.Envelope.title}}{{.Page.Envelope.title}} · {{end}}{{.Site.Name}}</title>
+  <link rel="stylesheet" href="{{.Site.BaseURL}}/style.css">
+  {{if eq .Page.Type "mermaid"}}
+  <script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+    mermaid.initialize({ startOnLoad: true, theme: "neutral" });
+  </script>
+  {{end}}
+</head>
+<body>
+  {{partial "topbar" .}}
+  <main>
+    {{block "content" .}}
+    <article class="prose">
+      {{if .Page.Envelope.title}}<h1 class="page-title">{{.Page.Envelope.title}}</h1>{{end}}
+      {{.Page.Content}}
+    </article>
+    {{end}}
+  </main>
+  <footer>
+    <p>Rendered from the repository's own artifacts by
+      <a href="https://github.com/gofuego/fuego-systheme">fuego-systheme</a> —
+      nothing was written back.</p>
+  </footer>
+</body>
+</html>

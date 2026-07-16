@@ -1,0 +1,8 @@
+{{define "content"}}
+<article>
+  <p class="kicker">API</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  {{with .Page.Envelope.version}}<div class="adr-meta"><span class="meta-chip mono">v{{.}}</span></div>{{end}}
+  {{.Page.Content}}
+</article>
+{{end}}

@@ -1,0 +1,7 @@
+<section class="card">
+  <h3>Resource</h3>
+  <div class="row"><span class="row-key">kind</span><code>{{index .Attributes "kind"}}</code></div>
+  <div class="row"><span class="row-key">apiVersion</span><code>{{index .Attributes "apiVersion"}}</code></div>
+  <div class="row"><span class="row-key">name</span><code>{{index .Attributes "name"}}</code></div>
+  {{with index .Attributes "namespace"}}<div class="row"><span class="row-key">namespace</span><code>{{.}}</code></div>{{end}}
+</section>

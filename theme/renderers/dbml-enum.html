@@ -1,0 +1,5 @@
+<div class="row">
+  <code class="row-key">{{index .Attributes "name"}}</code>
+  <span class="meta-chip">enum</span>
+  <span class="row-note mono">{{range $i, $v := index .Attributes "values"}}{{if $i}} | {{end}}{{$v}}{{end}}</span>
+</div>

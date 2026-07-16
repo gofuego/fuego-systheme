@@ -1,0 +1,5 @@
+<div class="row row-link op-ref{{if index .Attributes "deprecated"}} is-deprecated{{end}}">
+  <span class="method method-{{index .Attributes "method"}}">{{index .Attributes "method"}}</span>
+  <a class="op-path mono" href="{{index .Attributes "href"}}">{{index .Attributes "path"}}</a>
+  <span class="row-note">{{index .Attributes "summary"}}</span>
+</div>

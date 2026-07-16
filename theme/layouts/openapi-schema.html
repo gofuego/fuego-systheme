@@ -1,0 +1,10 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Schema</p>
+  <h1 class="page-title mono">{{.Page.Envelope.title}}</h1>
+  {{with .Page.Envelope.type}}<div class="adr-meta"><span class="meta-chip mono">{{.}}</span></div>{{end}}
+  <div class="prop-table">
+  {{.Page.Content}}
+  </div>
+</article>
+{{end}}

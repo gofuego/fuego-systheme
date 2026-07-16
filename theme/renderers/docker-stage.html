@@ -1,0 +1,5 @@
+<div class="docker-stage">
+  <span class="meta-chip">FROM</span>
+  <code>{{index .Attributes "image"}}</code>
+  {{with index .Attributes "alias"}}<span class="status status-stage">AS {{.}}</span>{{end}}
+</div>

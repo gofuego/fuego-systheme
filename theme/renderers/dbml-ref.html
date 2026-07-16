@@ -1,0 +1,7 @@
+<div class="row row-link">
+  <span class="meta-chip">ref</span>
+  <a class="row-key mono" href="{{index .Attributes "from_href"}}">{{index .Attributes "from_table"}}.{{index .Attributes "from_column"}}</a>
+  <span class="rel-arrow">{{index .Attributes "relation"}}</span>
+  <a class="mono" href="{{index .Attributes "to_href"}}">{{index .Attributes "to_table"}}.{{index .Attributes "to_column"}}</a>
+  {{with index .Attributes "on_delete"}}<span class="meta-chip">on delete: {{.}}</span>{{end}}
+</div>

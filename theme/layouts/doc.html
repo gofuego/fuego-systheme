@@ -1,0 +1,7 @@
+{{define "content"}}
+<article class="prose">
+  {{if .Page.Envelope.title}}<h1 class="page-title">{{.Page.Envelope.title}}</h1>{{end}}
+  {{if .Page.Envelope.summary}}<p class="lede">{{.Page.Envelope.summary}}</p>{{end}}
+  {{.Page.Content}}
+</article>
+{{end}}

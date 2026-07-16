@@ -1,0 +1,6 @@
+<li class="row row-link">
+  <span class="meta-chip chip-test">test</span>
+  <a class="row-key" href="{{index .Attributes "href"}}">{{index .Attributes "title"}}</a>
+  {{range index .Attributes "tags"}}<span class="meta-chip">{{.}}</span>{{end}}
+  {{range index .Attributes "annotations"}}<span class="status status-{{.}}">{{.}}</span>{{end}}
+</li>

@@ -1,0 +1,9 @@
+{{define "content"}}
+<article>
+  <p class="kicker">{{if .Page.Envelope.taxonomy}}{{.Page.Envelope.taxonomy}}{{else}}term{{end}}</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  <ul class="ref-list">
+  {{.Page.Content}}
+  </ul>
+</article>
+{{end}}

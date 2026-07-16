@@ -1,0 +1,4 @@
+<section class="card">
+  <div class="titlepath mono">{{range $i, $t := index .Attributes "titlepath"}}{{if $i}} › {{end}}{{$t}}{{end}}</div>
+  {{if index .Attributes "dynamic"}}<p class="row-note">Title is computed at runtime.</p>{{end}}
+</section>

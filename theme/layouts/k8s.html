@@ -1,0 +1,8 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Kubernetes {{with .Page.Envelope.resource_kind}}{{.}}{{end}}</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  {{with .Page.Envelope.k8s_namespace}}<p class="lede mono">namespace: {{.}}</p>{{end}}
+  {{.Page.Content}}
+</article>
+{{end}}

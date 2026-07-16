@@ -1,0 +1,9 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Database schema</p>
+  <h1 class="page-title">{{if .Page.Envelope.title}}{{.Page.Envelope.title}}{{else}}Schema{{end}}</h1>
+  {{with .Page.Envelope.database_type}}<div class="adr-meta"><span class="meta-chip mono">{{.}}</span></div>{{end}}
+  {{with .Page.Envelope.summary}}<p class="lede">{{.}}</p>{{end}}
+  {{.Page.Content}}
+</article>
+{{end}}

@@ -1,0 +1,41 @@
+# systheme pack config defaults — deep-merged UNDER the consuming site's own
+# config, so everything here is overridable.
+
+# Discovery runs over a real repository, so prune the trees that never hold
+# renderable artifacts.
+ignore:
+  - .git
+  - .github
+  - .claude
+  - .idea
+  - .vscode
+  - node_modules
+  - vendor
+  - dist
+  - build
+  - coverage
+  - tmp
+  - testdata
+
+routes:
+  # ADR filenames are numbered, so {slug} is unique by convention (matches
+  # fuego-adr's /decisions/ routing).
+  adr: "/decisions/{slug}"
+  # Dockerfiles are almost always all named "Dockerfile" — {dir} is what
+  # distinguishes them.
+  docker: "/dockerfiles/{dir}/{slug}"
+  # Everything else keeps the filesystem mirror: k8s manifests group under
+  # their own directory, and tree formats (openapi/dbml/playwright) route
+  # their children under the artifact's URL.
+
+taxonomies:
+  tags:
+    path: "/tags/{term}"
+    layout: "tag"
+    index_path: "/tags"
+    index_layout: "tag-index"
+  resource_kind:
+    path: "/by-kind/{term}"
+    layout: "tag"
+    index_path: "/by-kind"
+    index_layout: "tag-index"

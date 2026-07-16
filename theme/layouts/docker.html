@@ -1,0 +1,12 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Container build</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  {{with .Page.Envelope.images}}
+  <div class="adr-meta">{{range .}}<span class="meta-chip mono">{{.}}</span>{{end}}</div>
+  {{end}}
+  <div class="dockerfile">
+  {{.Page.Content}}
+  </div>
+</article>
+{{end}}

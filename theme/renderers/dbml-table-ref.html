@@ -1,0 +1,5 @@
+<div class="row row-link">
+  <a class="row-key mono" href="{{index .Attributes "href"}}">{{index .Attributes "name"}}</a>
+  {{with index .Attributes "alias"}}<span class="meta-chip mono">as {{.}}</span>{{end}}
+  <span class="row-note">{{index .Attributes "summary"}}</span>
+</div>

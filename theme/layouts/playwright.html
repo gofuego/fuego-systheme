@@ -1,0 +1,9 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Test spec</p>
+  <h1 class="page-title mono">{{if .Page.Envelope.title}}{{.Page.Envelope.title}}{{else}}Spec{{end}}</h1>
+  <ul class="ref-list">
+  {{.Page.Content}}
+  </ul>
+</article>
+{{end}}

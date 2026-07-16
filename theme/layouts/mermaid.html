@@ -1,0 +1,8 @@
+{{define "content"}}
+<article class="diagram-page">
+  {{if .Page.Envelope.title}}<h1 class="page-title">{{.Page.Envelope.title}}</h1>{{end}}
+  <div class="diagram-canvas">
+    {{.Page.Content}}
+  </div>
+</article>
+{{end}}

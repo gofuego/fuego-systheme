@@ -1,0 +1,8 @@
+<div class="row">
+  <span class="meta-chip">index</span>
+  <code class="row-key">{{range $i, $c := index .Attributes "columns"}}{{if $i}}, {{end}}{{$c}}{{end}}</code>
+  {{if index .Attributes "unique"}}<span class="meta-chip">unique</span>{{end}}
+  {{if index .Attributes "pk"}}<span class="status status-pk">PK</span>{{end}}
+  {{with index .Attributes "type"}}<span class="meta-chip mono">{{.}}</span>{{end}}
+  {{with index .Attributes "name"}}<span class="row-note mono">{{.}}</span>{{end}}
+</div>

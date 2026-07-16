@@ -1,0 +1,4 @@
+<section class="card">
+  <h3>Project <code>{{index .Attributes "name"}}</code>{{with index .Attributes "database_type"}} <span class="meta-chip mono">{{.}}</span>{{end}}</h3>
+  {{if .Content}}<p class="pre-line">{{.Content}}</p>{{end}}
+</section>

@@ -1,0 +1,6 @@
+<div class="row">
+  <span class="meta-chip">env from</span>
+  <span class="status status-ref">{{index .Attributes "refKind"}}</span>
+  <code>{{index .Attributes "refName"}}</code>
+  {{with index .Attributes "container"}}<span class="row-note">container: {{.}}</span>{{end}}
+</div>

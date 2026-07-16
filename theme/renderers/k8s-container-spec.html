@@ -1,0 +1,9 @@
+<section class="card">
+  <h3>Container {{with index .Attributes "name"}}<code>{{.}}</code>{{end}}{{if index .Attributes "init"}} <span class="meta-chip">init</span>{{end}}</h3>
+  <div class="row"><span class="row-key">image</span><code>{{index .Attributes "image"}}</code></div>
+  {{with index .Attributes "ports"}}<div class="row"><span class="row-key">ports</span><span class="mono">{{.}}</span></div>{{end}}
+  {{with index .Attributes "requests"}}<div class="row"><span class="row-key">requests</span><span class="mono">{{.}}</span></div>{{end}}
+  {{with index .Attributes "limits"}}<div class="row"><span class="row-key">limits</span><span class="mono">{{.}}</span></div>{{end}}
+  {{with index .Attributes "envCount"}}<div class="row"><span class="row-key">env vars</span><span>{{.}}</span></div>{{end}}
+  {{with index .Attributes "volumeMounts"}}<div class="row"><span class="row-key">mounts</span><span class="mono">{{range $i, $m := .}}{{if $i}}, {{end}}{{index $m "name"}} → {{index $m "mountPath"}}{{end}}</span></div>{{end}}
+</section>

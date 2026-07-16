@@ -1,0 +1,4 @@
+<section class="card">
+  <h3>Service spec <span class="meta-chip mono">{{index .Attributes "serviceType"}}</span></h3>
+  {{with index .Attributes "selector"}}<div class="row"><span class="row-key">selector</span><span class="mono">{{.}}</span></div>{{end}}
+</section>

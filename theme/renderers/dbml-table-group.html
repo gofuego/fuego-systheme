@@ -1,0 +1,5 @@
+<div class="row">
+  <span class="row-key">{{index .Attributes "name"}}</span>
+  <span class="meta-chip">group</span>
+  <span class="row-note mono">{{range $i, $t := index .Attributes "tables"}}{{if $i}}, {{end}}{{$t}}{{end}}</span>
+</div>

@@ -1,0 +1,5 @@
+<div class="row">
+  <span class="status-code sc-{{index .Attributes "status"}}">{{index .Attributes "status"}}</span>
+  <span class="row-note">{{.Content}}</span>
+  <span class="row-end">{{range $i, $ct := index .Attributes "content_types"}}{{if $i}} · {{end}}<code>{{$ct}}</code>{{end}}</span>
+</div>

@@ -1,0 +1,4 @@
+<section class="card">
+  {{if index .Attributes "summary"}}<p class="op-summary">{{index .Attributes "summary"}}</p>{{end}}
+  {{if .Content}}<p class="pre-line">{{.Content}}</p>{{end}}
+</section>

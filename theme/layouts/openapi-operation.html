@@ -1,0 +1,12 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Operation</p>
+  <h1 class="page-title op-title">
+    <span class="method method-{{.Page.Envelope.method}}">{{.Page.Envelope.method}}</span>
+    <code class="op-path">{{.Page.Envelope.path}}</code>
+  </h1>
+  {{if .Page.Envelope.deprecated}}<p class="deprecated-banner">Deprecated — see the description for the replacement.</p>{{end}}
+  {{with .Page.Envelope.operation_id}}<p class="lede mono">{{.}}</p>{{end}}
+  {{.Page.Content}}
+</article>
+{{end}}

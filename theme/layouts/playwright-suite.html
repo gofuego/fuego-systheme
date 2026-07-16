@@ -1,0 +1,10 @@
+{{define "content"}}
+<article>
+  <p class="kicker">Suite</p>
+  <h1 class="page-title">{{.Page.Envelope.title}}</h1>
+  {{with .Page.Envelope.tags}}<div class="adr-meta">{{range .}}<span class="meta-chip">{{.}}</span>{{end}}</div>{{end}}
+  <ul class="ref-list">
+  {{.Page.Content}}
+  </ul>
+</article>
+{{end}}

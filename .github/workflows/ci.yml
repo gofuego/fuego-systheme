@@ -1,0 +1,14 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches-ignore: [main, gh-pages, fuego-pages, fuego-studio-edits]
+
+jobs:
+  # Build + vet + test-race via the org's reusable Go CI workflow. The test
+  # suite includes the renderer-coverage check (every node type a registered
+  # parser can emit has a renderer template) and an end-to-end build of the
+  # testdata fixture repo.
+  go:
+    uses: gofuego/.github/.github/workflows/go-ci.yml@main

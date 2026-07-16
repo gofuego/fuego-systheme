@@ -1,0 +1,5 @@
+<div class="docker-line">
+  <span class="docker-kw">{{index .Attributes "instruction"}}</span>
+  <code class="docker-args">{{.Content}}</code>
+  {{with index .Attributes "copyFrom"}}<span class="meta-chip">from {{.}}</span>{{end}}
+</div>

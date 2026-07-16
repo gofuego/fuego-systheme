@@ -1,0 +1,4 @@
+<section class="card">
+  <h3>{{.Content}}</h3>
+  {{range $k, $v := .Attributes}}<div class="row"><code class="row-key">{{$k}}</code><span class="mono">{{$v}}</span></div>{{end}}
+</section>

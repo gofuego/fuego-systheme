@@ -1,0 +1,5 @@
+<section class="card">
+  <h3>Request body{{if index .Attributes "required"}} <span class="status status-required">required</span>{{end}}</h3>
+  <p>{{range $i, $ct := index .Attributes "content_types"}}{{if $i}} · {{end}}<code>{{$ct}}</code>{{end}}</p>
+  {{if .Content}}<p class="pre-line">{{.Content}}</p>{{end}}
+</section>
